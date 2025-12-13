@@ -871,16 +871,11 @@
     @media (max-width: 980px) {
       .hero-inner {
         grid-template-columns: 1fr;
+        padding: 20px 16px;
       }
 
-      .grid3 {
-        grid-template-columns: 1fr;
-      }
-
-      .coachGrid {
-        grid-template-columns: 1fr;
-      }
-
+      .grid3,
+      .coachGrid,
       .enquiryWrap {
         grid-template-columns: 1fr;
       }
@@ -890,15 +885,56 @@
       }
 
       .hero h1 {
-        font-size: 48px;
+        font-size: 42px;
+        line-height: 1.05;
       }
 
-      nav ul {
-        gap: 6px;
+      /* Simply Header: Hide links + 'Watch Reels', keep Logo + Start Now */
+      nav ul,
+      .nav .btn:not(.primary) {
+        display: none;
+      }
+
+      .nav {
+        padding: 12px 14px;
       }
 
       .brand {
         min-width: unset;
+        gap: 10px;
+      }
+
+      .brand img {
+        width: 50px;
+        height: 50px;
+        /* Smaller logo on mobile */
+      }
+
+      .brand .name {
+        display: none;
+      }
+
+      /* Hide brand text to save space if needed, or keep it */
+
+      /* Make 'Start Now' accessible */
+      .nav>div:last-child {
+        margin-left: auto;
+      }
+
+      /* Stack hero buttons */
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-actions .btn {
+        justify-content: center;
+        width: 100%;
+      }
+
+      /* Adjust footer clearance for WA button */
+      body {
+        padding-bottom: 80px;
       }
     }
   </style>
