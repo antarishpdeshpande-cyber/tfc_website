@@ -1,0 +1,7 @@
+{
+  "name": "tfc-website",
+  "version": "1.0.0",
+  "dependencies": {
+    "@netlify/neon": "^1.0.0"
+  }
+}

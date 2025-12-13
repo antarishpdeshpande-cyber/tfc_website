@@ -1557,6 +1557,57 @@
     // start at step 1
     setStep(1);
   </script>
+  <script>
+    // ===== Remote Content Loader (Neon DB) =====
+    (async function loadRemoteContent() {
+      try {
+        const res = await fetch('/.netlify/functions/get_content');
+        if (!res.ok) return;
+        const dbData = await res.json();
+        if (!dbData || !dbData.wa) return; // Basic validation
+
+        // Update WhatsApp
+        // Note: We need to find all WhatsApp links.
+        const waLinks = document.querySelectorAll('a[href*="wa.me"]');
+        waLinks.forEach(link => {
+          // Preserve the original text message if possible, just swap number
+          // Simply replacing href is easier:
+          link.href = `https://wa.me/${dbData.wa}?text=I'm%20interested%20in%20joining%20TFC`;
+        });
+
+        // Update Coaches
+        if (dbData.cA) {
+          const cards = document.querySelectorAll('.flip');
+          if (cards[0]) {
+            cards[0].querySelector('.fcName').textContent = dbData.cA.name;
+            cards[0].querySelector('.fcRank').textContent = dbData.cA.rank;
+          }
+          if (cards[1] && dbData.cB) {
+            cards[1].querySelector('.fcName').textContent = dbData.cB.name;
+            cards[1].querySelector('.fcRank').textContent = dbData.cB.rank;
+          }
+          if (cards[2] && dbData.cC) {
+            cards[2].querySelector('.fcName').textContent = dbData.cC.name;
+            cards[2].querySelector('.fcRank').textContent = dbData.cC.rank;
+          }
+        }
+
+        // Update Videos
+        if (dbData.v1) {
+          const vids = document.querySelectorAll('video');
+          if (vids[0] && dbData.v1) vids[0].src = dbData.v1;
+          if (vids[1] && dbData.v2) vids[1].src = dbData.v2;
+          if (vids[2] && dbData.v3) vids[2].src = dbData.v3;
+          if (vids[3] && dbData.v4) vids[3].src = dbData.v4;
+        }
+
+        console.log("Remote content loaded.");
+
+      } catch (e) {
+        console.log("Using default content.", e);
+      }
+    })();
+  </script>
 </body>
 
 </html>
