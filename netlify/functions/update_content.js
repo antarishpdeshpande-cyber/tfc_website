@@ -1,4 +1,4 @@
-const { neon } = require('@netlify/neon');
+const { neon } = require('@neondatabase/serverless');
 
 exports.handler = async (event, context) => {
     if (event.httpMethod !== "POST") {

@@ -1,4 +1,4 @@
-const { neon } = require('@netlify/neon');
+const { neon } = require('@neondatabase/serverless');
 
 exports.handler = async (event, context) => {
   try {
@@ -22,7 +22,7 @@ exports.handler = async (event, context) => {
     console.error("DB Error:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Database error" }),
+      body: JSON.stringify({ error: "Database error: " + error.message }),
     };
   }
 };
