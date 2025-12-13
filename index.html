@@ -1,0 +1,1526 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trilok Fight Club (TFC) — MMA • Boxing • BJJ</title>
+  <meta name="description"
+    content="Trilok Fight Club (TFC) — MMA, Boxing, Muay Thai, Wrestling, Wushu, BJJ, Strength & Conditioning, Mobility, Diet Consultation, Personal Training. Sector 23A, C2, New Palam Vihar." />
+
+  <!-- Typography (safe, punchy, condensed feel) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070707;
+      --panel: #0f0f0f;
+      --panel2: #141414;
+      --stroke: rgba(255, 255, 255, .10);
+      --text: #f5f5f5;
+      --muted: rgba(255, 255, 255, .72);
+      --y: #f7c600;
+      --y2: #ffdd57;
+      --ok: #33d17a;
+      --bad: #ff5a5a;
+      --radius: 18px;
+      --shadow: 0 14px 40px rgba(0, 0, 0, .55);
+      --max: 1120px;
+      --ring: 0 0 0 3px rgba(247, 198, 0, .25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 30% 0%, rgba(247, 198, 0, .12), transparent 60%),
+        radial-gradient(900px 600px at 100% 10%, rgba(247, 198, 0, .10), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* ===== subtle cage mesh overlay + noise ===== */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, .035) 0 2px, transparent 2px 16px),
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, .06), transparent 60%);
+      opacity: .55;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: .35;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    :focus-visible {
+      outline: none;
+      box-shadow: var(--ring);
+      border-radius: 12px;
+    }
+
+    /* ===== header ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7, 7, 7, .78);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--stroke);
+    }
+
+    .nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 240px;
+    }
+
+    .brand img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 28px rgba(247, 198, 0, .22);
+      border: none;
+      animation: logoPulse 2.8s ease-in-out infinite;
+    }
+
+    @keyframes logoPulse {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 0 rgba(247, 198, 0, .0));
+        transform: translateY(0);
+      }
+
+      50% {
+        filter: drop-shadow(0 0 14px rgba(247, 198, 0, .35));
+        transform: translateY(-1px);
+      }
+    }
+
+    .brand .name {
+      line-height: 1.1;
+    }
+
+    .brand .name .t {
+      font-family: "Bebas Neue", Inter, sans-serif;
+      font-size: 22px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .brand .name .s {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, .05);
+      color: var(--text);
+    }
+
+    .btn {
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: .2px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .04);
+      color: var(--text);
+      transition: transform .09s ease, box-shadow .15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn.primary {
+      background: var(--y);
+      color: #000;
+      border-color: rgba(0, 0, 0, .30);
+      box-shadow: 0 16px 36px rgba(247, 198, 0, .16);
+    }
+
+    .btn.primary:hover {
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, .25), 0 20px 50px rgba(247, 198, 0, .22);
+    }
+
+    .btn.impact:hover {
+      animation: impact .22s ease-in-out;
+    }
+
+    @keyframes impact {
+      0% {
+        transform: translateX(0);
+      }
+
+      35% {
+        transform: translateX(-2px);
+      }
+
+      70% {
+        transform: translateX(2px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    /* ===== layout ===== */
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 20px 18px 80px;
+    }
+
+    section {
+      margin-top: 26px;
+    }
+
+    .hero {
+      border-radius: calc(var(--radius) + 8px);
+      background: linear-gradient(180deg, rgba(247, 198, 0, .12), transparent 55%), var(--panel);
+      border: 1px solid rgba(255, 255, 255, .10);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* diagonal “fight card” cut */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -40px -40px auto auto;
+      width: 380px;
+      height: 280px;
+      background: radial-gradient(circle at 30% 30%, rgba(247, 198, 0, .25), transparent 62%);
+      transform: rotate(12deg);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 16px;
+      padding: 26px;
+      align-items: stretch;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(247, 198, 0, .35);
+      background: rgba(247, 198, 0, .08);
+      color: var(--y2);
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .hero h1 {
+      font-family: "Bebas Neue", Inter, sans-serif;
+      font-size: 60px;
+      letter-spacing: 1px;
+      line-height: 1.02;
+      text-transform: uppercase;
+      margin: 14px 0 10px;
+    }
+
+    .hero p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 70ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .panel {
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
+      border: 1px solid rgba(255, 255, 255, .10);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .meta {
+      display: grid;
+      gap: 10px;
+    }
+
+    .meta .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, .25);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 14px;
+      font-size: 13px;
+    }
+
+    .meta .row b {
+      color: var(--y2);
+    }
+
+    .mini {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ===== quote module ===== */
+    .quoteBox {
+      border-radius: 16px;
+      border: 1px solid rgba(247, 198, 0, .20);
+      background: rgba(247, 198, 0, .06);
+      padding: 14px;
+      position: relative;
+    }
+
+    .quoteBox .label {
+      font-family: "Bebas Neue", Inter, sans-serif;
+      letter-spacing: .8px;
+      color: var(--y2);
+      text-transform: uppercase;
+      font-size: 16px;
+    }
+
+    .quoteBox blockquote {
+      margin: 10px 0 10px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, .90);
+      line-height: 1.45;
+    }
+
+    .quoteBox .by {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* ===== section titles ===== */
+    .sectionTitle {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .sectionTitle h2 {
+      margin: 0;
+      font-family: "Bebas Neue", Inter, sans-serif;
+      letter-spacing: .9px;
+      text-transform: uppercase;
+      font-size: 30px;
+    }
+
+    .sectionTitle p {
+      margin: 0;
+      max-width: 70ch;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ===== cards ===== */
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      border-radius: var(--radius);
+      background: var(--panel2);
+      border: 1px solid rgba(255, 255, 255, .08);
+      padding: 16px;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, .25);
+      transform-style: preserve-3d;
+    }
+
+    .tagRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(247, 198, 0, .10);
+      border: 1px solid rgba(247, 198, 0, .25);
+      color: var(--y2);
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+    }
+
+    .mutetag {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .10);
+      color: rgba(255, 255, 255, .80);
+      font-weight: 800;
+    }
+
+    /* ===== fight tape gallery ===== */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+
+    .tape {
+      grid-column: span 6;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: #0c0c0c;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .35);
+      transform: translateZ(0);
+    }
+
+    .tape .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, .55);
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .tape .topbar .name {
+      font-weight: 900;
+      letter-spacing: .2px;
+      font-size: 13px;
+    }
+
+    .tape .topbar .pill {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #000;
+      background: var(--y);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .tape .media {
+      aspect-ratio: 16/9;
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(247, 198, 0, .12), transparent 55%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .06) 12px, transparent 12px, transparent 24px);
+      display: grid;
+      place-items: center;
+    }
+
+    .tape video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transform: scale(1.02);
+      transition: opacity .18s ease, transform .25s ease;
+    }
+
+    .tape:hover video {
+      opacity: 1;
+      transform: scale(1.00);
+    }
+
+    .tape .playHint {
+      position: absolute;
+      inset: auto 12px 12px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+      color: rgba(255, 255, 255, .85);
+      font-size: 12px;
+    }
+
+    .tape .playHint .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--y);
+      box-shadow: 0 0 20px rgba(247, 198, 0, .45);
+    }
+
+    /* ===== coach fight cards (flip) ===== */
+    .coachGrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .flip {
+      perspective: 1000px;
+    }
+
+    .flipInner {
+      position: relative;
+      width: 100%;
+      min-height: 240px;
+      transition: transform .55s ease;
+      transform-style: preserve-3d;
+    }
+
+    .flip:hover .flipInner,
+    .flipInner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, .10);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, .28);
+      overflow: hidden;
+    }
+
+    .front {
+      background:
+        linear-gradient(180deg, rgba(247, 198, 0, .12), transparent 55%),
+        var(--panel2);
+      padding: 16px;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+      background: #0c0c0c;
+      padding: 16px;
+    }
+
+    .fcTitle {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .fcName {
+      font-family: "Bebas Neue", Inter, sans-serif;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      font-size: 26px;
+      margin: 0;
+    }
+
+    .rank {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(247, 198, 0, .12);
+      border: 1px solid rgba(247, 198, 0, .25);
+      color: var(--y2);
+      font-weight: 900;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .stat {
+      background: rgba(0, 0, 0, .26);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .stat b {
+      display: block;
+      color: var(--y2);
+      font-size: 14px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* ===== enquiry: interactive multi-step ===== */
+    .enquiryWrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .formCard {
+      border-radius: var(--radius);
+      background: var(--panel2);
+      border: 1px solid rgba(255, 255, 255, .10);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, .28);
+      padding: 16px;
+    }
+
+    .stepper {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .stepDot {
+      height: 10px;
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid rgba(255, 255, 255, .10);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stepDot.on {
+      background: rgba(247, 198, 0, .18);
+      border-color: rgba(247, 198, 0, .35);
+    }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 10px 0 6px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(0, 0, 0, .22);
+      color: var(--text);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      cursor: pointer;
+      user-select: none;
+      padding: 9px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .04);
+      color: rgba(255, 255, 255, .88);
+      font-weight: 900;
+      font-size: 12px;
+      transition: transform .10s ease, background .15s ease, border-color .15s ease;
+    }
+
+    .chip:hover {
+      transform: translateY(-1px);
+    }
+
+    .chip.on {
+      background: rgba(247, 198, 0, .14);
+      border-color: rgba(247, 198, 0, .35);
+      color: var(--y2);
+    }
+
+    .rangeRow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(0, 0, 0, .20);
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .msg {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 12px;
+      display: none;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(0, 0, 0, .24);
+    }
+
+    .status.ok {
+      display: block;
+      border-color: rgba(51, 209, 122, .35);
+      color: rgba(51, 209, 122, .95);
+    }
+
+    .status.err {
+      display: block;
+      border-color: rgba(255, 90, 90, .35);
+      color: rgba(255, 90, 90, .95);
+    }
+
+    /* ===== scroll punch reveal ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .55s ease, transform .55s ease;
+      position: relative;
+    }
+
+    .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal.on::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--y);
+      box-shadow: 0 0 0 0 rgba(247, 198, 0, .55);
+      animation: punchBurst .55s ease-out 1;
+      pointer-events: none;
+    }
+
+    @keyframes punchBurst {
+      0% {
+        box-shadow: 0 0 0 0 rgba(247, 198, 0, .55);
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        box-shadow: 0 0 0 26px rgba(247, 198, 0, 0);
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* ===== floating WhatsApp button ===== */
+    .wa {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      background: rgba(247, 198, 0, .95);
+      color: #000;
+      font-weight: 900;
+      border: 1px solid rgba(0, 0, 0, .25);
+      box-shadow: 0 18px 40px rgba(247, 198, 0, .20);
+      transition: transform .12s ease;
+    }
+
+    .wa:hover {
+      transform: translateY(-2px);
+    }
+
+    .wa .bubble {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px 10px 10px 10px;
+      background: #000;
+      opacity: .95;
+    }
+
+    /* ===== responsive ===== */
+    @media (max-width: 980px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .grid3 {
+        grid-template-columns: 1fr;
+      }
+
+      .coachGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .enquiryWrap {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery .tape {
+        grid-column: span 12;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      nav ul {
+        gap: 6px;
+      }
+
+      .brand {
+        min-width: unset;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- WhatsApp instant enquiry -->
+  <a class="wa" id="waBtn" target="_blank" rel="noopener">
+    <span class="bubble" aria-hidden="true"></span>
+    WhatsApp Enquiry
+  </a>
+
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <!-- Put your attached logo in same folder as this HTML and name it "logo.jpg" -->
+        <img src="tfc-logo.png" alt="TFC logo" />
+        <div class="name">
+          <div class="t">Trilok Fight Club</div>
+          <div class="s">MMA • Boxing • Muay Thai • BJJ • S&amp;C</div>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#training">Training</a></li>
+          <li><a href="#tape">Fight-Tape</a></li>
+          <li><a href="#coaches">Coaches</a></li>
+          <li><a href="#enquiry">Enquiry</a></li>
+        </ul>
+      </nav>
+
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a class="btn impact" href="#tape">Watch Reels</a>
+        <a class="btn primary impact" href="#enquiry">Start Now →</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero reveal" id="top">
+      <div class="hero-inner">
+        <div>
+          <div class="kicker">Train Hard • Fight Smart</div>
+          <h1>TRILOK FIGHT CLUB</h1>
+          <p>
+            Professional training across striking, grappling and conditioning — with highly qualified
+            <b>male and female coaches</b> to keep training safe, authentic and effective for every skill level.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary impact" href="#enquiry">Book a Trial →</a>
+            <a class="btn impact" href="#training">Explore Training</a>
+            <button class="btn impact" id="personalizeBtn" type="button">Personalize</button>
+          </div>
+
+          <div class="msg" id="personalMsg"></div>
+        </div>
+
+        <!-- Quote module -->
+        <aside class="panel">
+          <div class="meta">
+            <div class="row"><span>📍 Locations</span><b>Sector 23A • C2 • New Palam Vihar</b></div>
+            <div class="row"><span>📞 Call</span><b>8950723024</b></div>
+          </div>
+
+          <div class="quoteBox" aria-live="polite">
+            <div class="label">Fight Mindset</div>
+            <blockquote id="quoteText"></blockquote>
+            <div class="by">
+              <span id="quoteBy"></span>
+            </div>
+          </div>
+
+
+        </aside>
+      </div>
+    </section>
+
+    <!-- TRAINING -->
+    <section id="training" class="reveal">
+      <div class="sectionTitle">
+        <h2>What We Train</h2>
+        <p>Pick your discipline — we’ll build your path from fundamentals to fight-ready.</p>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">MMA</h3>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Striking + grappling integration, transitions,
+            strategy.</p>
+          <div class="tagRow">
+            <span class="tag">Fight IQ</span><span class="tag mutetag">All Levels</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Striking</h3>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Boxing + Muay Thai, timing, defense, pad & bag
+            work.</p>
+          <div class="tagRow">
+            <span class="tag">Boxing</span><span class="tag">Muay Thai</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Grappling</h3>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Wrestling + BJJ, takedowns, control, escapes,
+            live rounds.</p>
+          <div class="tagRow">
+            <span class="tag">Wrestling</span><span class="tag">BJJ</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Wushu</h3>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Speed, coordination, footwork and athletic
+            movement.</p>
+          <div class="tagRow">
+            <span class="tag mutetag">Skill</span><span class="tag mutetag">Agility</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">S&amp;C + Mobility</h3>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Conditioning, strength, injury prevention,
+            mobility sessions.</p>
+          <div class="tagRow">
+            <span class="tag">Strength</span><span class="tag">Mobility</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Diet + Personal Training
+          </h3>
+          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Goal-based coaching, fat loss, performance, fight
+            prep.</p>
+          <div class="tagRow">
+            <span class="tag">Diet</span><span class="tag">1:1 PT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIGHT TAPE -->
+    <section id="tape" class="reveal">
+      <div class="sectionTitle">
+        <h2>Fight-Tape Gallery</h2>
+
+      </div>
+
+      <div class="gallery">
+        <!-- Replace src with your clips (mp4/webm). Poster optional. -->
+        <article class="tape">
+          <div class="topbar">
+            <div class="name">Pad Work — Combinations</div>
+            <div class="pill">reel</div>
+          </div>
+          <div class="media">
+            <video muted loop playsinline preload="none" data-autoplay>
+              <source src="reel1.mp4" type="video/mp4">
+            </video>
+
+          </div>
+        </article>
+
+        <article class="tape">
+          <div class="topbar">
+            <div class="name">BJJ — Escapes & Control</div>
+            <div class="pill">reel</div>
+          </div>
+          <div class="media">
+            <video muted loop playsinline preload="none" data-autoplay>
+              <source src="reel2.mp4" type="video/mp4">
+            </video>
+
+          </div>
+        </article>
+
+        <article class="tape">
+          <div class="topbar">
+            <div class="name">Wrestling — Takedowns</div>
+            <div class="pill">reel</div>
+          </div>
+          <div class="media">
+            <video muted loop playsinline preload="none" data-autoplay>
+              <source src="reel3.mp4" type="video/mp4">
+            </video>
+
+          </div>
+        </article>
+
+        <article class="tape">
+          <div class="topbar">
+            <div class="name">S&amp;C — Conditioning Circuit</div>
+            <div class="pill">reel</div>
+          </div>
+          <div class="media">
+            <video muted loop playsinline preload="none" data-autoplay>
+              <source src="reel4.mp4" type="video/mp4">
+            </video>
+
+          </div>
+        </article>
+      </div>
+
+
+    </section>
+
+    <!-- COACHES -->
+    <section id="coaches" class="reveal">
+      <div class="sectionTitle">
+        <h2>Coach Fight Cards</h2>
+
+      </div>
+
+      <div class="coachGrid">
+        <div class="flip">
+          <div class="flipInner">
+            <div class="face front">
+              <div class="fcTitle">
+                <h3 class="fcName">Coach A</h3>
+                <span class="rank">Striking</span>
+              </div>
+              <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Boxing • Muay Thai • Pads • Defense</p>
+              <div class="stats">
+                <div class="stat"><b>Pro</b><span>Coaching</span></div>
+                <div class="stat"><b>Safe</b><span>Technique</span></div>
+                <div class="stat"><b>Fast</b><span>Progress</span></div>
+              </div>
+              <div class="tagRow" style="margin-top:12px;">
+                <span class="tag">High IQ</span><span class="tag mutetag">All Levels</span>
+              </div>
+            </div>
+
+            <div class="face back">
+              <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Focus Areas</h3>
+              <ul style="margin:10px 0 0; padding-left:18px; color: var(--muted); font-size:13px; line-height:1.6;">
+                <li>Footwork & timing drills</li>
+                <li>Combination building</li>
+                <li>Controlled sparring structure</li>
+              </ul>
+              <p class="small" style="margin-top:12px;">Add credentials + achievements here.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip">
+          <div class="flipInner">
+            <div class="face front">
+              <div class="fcTitle">
+                <h3 class="fcName">Coach B</h3>
+                <span class="rank">Grappling</span>
+              </div>
+              <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Wrestling • BJJ • Takedowns • Control</p>
+              <div class="stats">
+                <div class="stat"><b>Base</b><span>Wrestling</span></div>
+                <div class="stat"><b>Flow</b><span>BJJ</span></div>
+                <div class="stat"><b>Live</b><span>Rounds</span></div>
+              </div>
+              <div class="tagRow" style="margin-top:12px;">
+                <span class="tag">Takedowns</span><span class="tag">Escapes</span>
+              </div>
+            </div>
+
+            <div class="face back">
+              <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Focus Areas</h3>
+              <ul style="margin:10px 0 0; padding-left:18px; color: var(--muted); font-size:13px; line-height:1.6;">
+                <li>Position first, submission next</li>
+                <li>Chain takedowns</li>
+                <li>Defense under pressure</li>
+              </ul>
+              <p class="small" style="margin-top:12px;">Add credentials + achievements here.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip">
+          <div class="flipInner">
+            <div class="face front">
+              <div class="fcTitle">
+                <h3 class="fcName">Coach C</h3>
+                <span class="rank">S&amp;C</span>
+              </div>
+              <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">Strength • Conditioning • Mobility • Rehab
+              </p>
+              <div class="stats">
+                <div class="stat"><b>Gas</b><span>Cardio</span></div>
+                <div class="stat"><b>Power</b><span>Strength</span></div>
+                <div class="stat"><b>Move</b><span>Mobility</span></div>
+              </div>
+              <div class="tagRow" style="margin-top:12px;">
+                <span class="tag">Injury-Safe</span><span class="tag mutetag">Performance</span>
+              </div>
+            </div>
+
+            <div class="face back">
+              <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Focus Areas</h3>
+              <ul style="margin:10px 0 0; padding-left:18px; color: var(--muted); font-size:13px; line-height:1.6;">
+                <li>Fight conditioning blocks</li>
+                <li>Mobility + recovery routines</li>
+                <li>Strength cycles for athletes</li>
+              </ul>
+              <p class="small" style="margin-top:12px;">Add credentials + achievements here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENQUIRY -->
+    <section id="enquiry" class="reveal">
+      <div class="sectionTitle">
+        <h2>Enquiry</h2>
+        <p>This builds your “fighter profile” and sends a clean summary to WhatsApp.</p>
+      </div>
+
+      <div class="enquiryWrap">
+        <div class="panel">
+          <div
+            style="font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;text-transform:uppercase;font-size:22px;">
+            Your Locations
+          </div>
+          <div class="meta" style="margin-top:12px;">
+            <div class="row"><span>📍 Sector 23A</span><b>Training hub</b></div>
+            <div class="row"><span>📍 C2</span><b>Training hub</b></div>
+            <div class="row"><span>📍 New Palam Vihar</span><b>New branch</b></div>
+            <div class="row"><span>📞 Call</span><b>8950723024</b></div>
+          </div>
+
+        </div>
+
+        <div class="formCard">
+          <div class="stepper" aria-hidden="true">
+            <div class="stepDot on" id="sd1"></div>
+            <div class="stepDot" id="sd2"></div>
+            <div class="stepDot" id="sd3"></div>
+          </div>
+
+          <!-- Step 1 -->
+          <div id="step1">
+            <div class="row2">
+              <div>
+                <label for="name">Name</label>
+                <input id="name" placeholder="Your name" maxlength="60" />
+              </div>
+              <div>
+                <label for="phone">Phone</label>
+                <input id="phone" placeholder="10-digit number" inputmode="numeric" />
+              </div>
+            </div>
+
+            <label>Choose training (tap to select)</label>
+            <div class="chips" id="disciplines">
+              <div class="chip" data-v="MMA">MMA</div>
+              <div class="chip" data-v="Boxing">Boxing</div>
+              <div class="chip" data-v="Muay Thai">Muay Thai</div>
+              <div class="chip" data-v="Wrestling">Wrestling</div>
+              <div class="chip" data-v="Wushu">Wushu</div>
+              <div class="chip" data-v="BJJ">BJJ</div>
+              <div class="chip" data-v="S&C">Strength & Conditioning</div>
+              <div class="chip" data-v="Mobility">Mobility</div>
+              <div class="chip" data-v="Diet">Diet Consultation</div>
+              <div class="chip" data-v="PT">Personal Training</div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; margin-top:12px;">
+              <button class="btn primary impact" id="to2" type="button">Next →</button>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div id="step2" style="display:none;">
+            <label>Experience level</label>
+            <div class="rangeRow">
+              <span class="small">Beginner</span>
+              <input type="range" min="0" max="10" value="3" id="exp" />
+              <span class="small" id="expLabel">3/10</span>
+            </div>
+
+            <div class="row2">
+              <div>
+                <label for="loc">Preferred location</label>
+                <select id="loc">
+                  <option>Sector 23A</option>
+                  <option>C2</option>
+                  <option>New Palam Vihar</option>
+                </select>
+              </div>
+              <div>
+                <label for="time">Preferred time</label>
+                <select id="time">
+                  <option>Morning</option>
+                  <option>Afternoon</option>
+                  <option>Evening</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; gap:10px; margin-top:12px;">
+              <button class="btn impact" id="back1" type="button">← Back</button>
+              <button class="btn primary impact" id="to3" type="button">Next →</button>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div id="step3" style="display:none;">
+            <label for="goal">Your goal (optional)</label>
+            <textarea id="goal"
+              placeholder="Fat loss, self-defense, competition prep, stamina, confidence..."></textarea>
+
+            <div class="msg" id="summary"></div>
+
+            <div style="display:flex; justify-content:space-between; gap:10px; margin-top:12px;">
+              <button class="btn impact" id="back2" type="button">← Back</button>
+              <button class="btn primary impact" id="sendWA" type="button">Send via WhatsApp →</button>
+            </div>
+
+            <div id="status" class="status"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top:26px; text-align:center; color:var(--muted); font-size:12px;">
+      © <span id="year"></span> Trilok Fight Club (TFC). Built to fight.
+    </footer>
+  </main>
+
+  <script>
+    // ===== Data you provided =====
+    const PHONE_E164 = "918950723024"; // WhatsApp format: countrycode + number (India=91)
+    const LOCATIONS = ["Sector 23A", "C2", "New Palam Vihar (New Branch)"];
+
+    // Quotes (verified attributions)
+    // Muhammad Ali quote is documented by the Muhammad Ali Center. :contentReference[oaicite:0]{index=0}
+    // Mike Tyson quote is widely reported (example: Economic Times). :contentReference[oaicite:1]{index=1}
+    // Georges St-Pierre quote appears on his official Facebook post. :contentReference[oaicite:2]{index=2}
+    const QUOTES = [
+      {
+        text: "I hated every minute of training, but I said, 'Don't quit. Suffer now and live the rest of your life as a champion.'",
+        by: "Muhammad Ali"
+      },
+      {
+        text: "Everyone has a plan until they get punched in the mouth.",
+        by: "Mike Tyson"
+      },
+      {
+        text: "You don’t get better on the days when you feel like going. You get better on the days when you don’t want to go, but you go anyway.",
+        by: "Georges St-Pierre"
+      }
+    ];
+
+    // ===== Helpers =====
+    const $ = (id) => document.getElementById(id);
+    const year = new Date().getFullYear();
+    $("year").textContent = year;
+
+    // WhatsApp floating button (short, clean copy — not a WhatsApp-style paragraph)
+    const waBase = `https://wa.me/${PHONE_E164}`;
+    $("waBtn").href = waBase + `?text=${encodeURIComponent("Hi TFC — I want to enquire about training.")}`;
+
+    // ===== Quote rotator =====
+    let qi = 0;
+    function renderQuote() {
+      const q = QUOTES[qi % QUOTES.length];
+      $("quoteText").textContent = "“" + q.text + "”";
+      $("quoteBy").textContent = "— " + q.by;
+    }
+
+    renderQuote();
+    setInterval(() => { qi++; renderQuote(); }, 5000);
+
+    // ===== Personalization =====
+    const personalMsg = $("personalMsg");
+    const storedName = localStorage.getItem("tfc_name");
+    if (storedName) {
+      personalMsg.textContent = `Welcome back, ${storedName}. Gloves on — let’s build your game plan.`;
+    }
+    $("personalizeBtn").addEventListener("click", () => {
+      const n = prompt("What should we call you on this device?");
+      if (!n) return;
+      localStorage.setItem("tfc_name", n.trim().slice(0, 40));
+      personalMsg.textContent = `Welcome, ${n.trim().slice(0, 40)}. Your first win is showing up.`;
+    });
+
+    // ===== Scroll-trigger punch animations =====
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add("on");
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    // ===== Fight-tape hover reels =====
+    const tapes = document.querySelectorAll("video[data-autoplay]");
+    tapes.forEach(v => {
+      const host = v.closest(".tape");
+
+      // Desktop hover
+      host.addEventListener("mouseenter", () => { v.play().catch(() => { }); });
+      host.addEventListener("mouseleave", () => { v.pause(); v.currentTime = 0; });
+
+      // Mobile/Touch tap
+      host.addEventListener("click", (e) => {
+        if (v.paused) {
+          v.play().catch(() => { });
+        } else {
+          v.pause();
+        }
+      });
+    });
+
+    // ===== Coach Cards (Tap to Flip) =====
+    document.querySelectorAll(".flip").forEach(card => {
+      card.addEventListener("click", () => {
+        const inner = card.querySelector(".flipInner");
+        inner.classList.toggle("flipped");
+      });
+    });
+
+    // ===== Interactive enquiry form (3 steps) =====
+    const sd1 = $("sd1"), sd2 = $("sd2"), sd3 = $("sd3");
+    const step1 = $("step1"), step2 = $("step2"), step3 = $("step3");
+    const chips = Array.from(document.querySelectorAll("#disciplines .chip"));
+    const selected = new Set();
+
+    function setStep(n) {
+      step1.style.display = n === 1 ? "" : "none";
+      step2.style.display = n === 2 ? "" : "none";
+      step3.style.display = n === 3 ? "" : "none";
+      sd1.classList.toggle("on", n >= 1);
+      sd2.classList.toggle("on", n >= 2);
+      sd3.classList.toggle("on", n >= 3);
+    }
+
+    chips.forEach(c => {
+      c.addEventListener("click", () => {
+        const v = c.dataset.v;
+        if (selected.has(v)) { selected.delete(v); c.classList.remove("on"); }
+        else { selected.add(v); c.classList.add("on"); }
+      });
+    });
+
+    const exp = $("exp"), expLabel = $("expLabel");
+    exp.addEventListener("input", () => expLabel.textContent = `${exp.value}/10`);
+
+    $("to2").addEventListener("click", () => {
+      const name = $("name").value.trim();
+      const phone = $("phone").value.replace(/[^\d]/g, "");
+      if (name.length < 2) return alert("Enter your name.");
+      if (phone.length < 10) return alert("Enter a valid phone number.");
+      if (selected.size === 0) return alert("Select at least one training style.");
+      setStep(2);
+    });
+
+    $("back1").addEventListener("click", () => setStep(1));
+
+    $("to3").addEventListener("click", () => {
+      setStep(3);
+      renderSummary();
+    });
+
+    $("back2").addEventListener("click", () => setStep(2));
+
+    function renderSummary() {
+      const name = $("name").value.trim();
+      const phone = $("phone").value.replace(/[^\d]/g, "");
+      const loc = $("loc").value;
+      const time = $("time").value;
+      const goal = $("goal").value.trim();
+      const styles = Array.from(selected).join(", ");
+
+      $("summary").innerHTML =
+        `<b>Fighter Profile:</b><br>` +
+        `• Name: <b>${escapeHtml(name)}</b><br>` +
+        `• Phone: <b>${escapeHtml(phone)}</b><br>` +
+        `• Training: <b>${escapeHtml(styles)}</b><br>` +
+        `• Experience: <b>${escapeHtml(exp.value)}/10</b><br>` +
+        `• Location: <b>${escapeHtml(loc)}</b><br>` +
+        `• Time: <b>${escapeHtml(time)}</b><br>` +
+        (goal ? `• Goal: <b>${escapeHtml(goal)}</b><br>` : ``) +
+        `<span class="small">Tap “Send via WhatsApp” to share this instantly.</span>`;
+    }
+
+    function escapeHtml(s) {
+      return (s || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+    }
+
+    $("sendWA").addEventListener("click", () => {
+      const name = $("name").value.trim();
+      const phone = $("phone").value.replace(/[^\d]/g, "");
+      const loc = $("loc").value;
+      const time = $("time").value;
+      const goal = $("goal").value.trim();
+      const styles = Array.from(selected).join(", ");
+      const expVal = exp.value;
+
+      // Short, structured message (not WhatsApp-brochure text)
+      const msgLines = [
+        "TFC Enquiry",
+        `Name: ${name}`,
+        `Phone: ${phone}`,
+        `Training: ${styles}`,
+        `Experience: ${expVal}/10`,
+        `Location: ${loc}`,
+        `Time: ${time}`,
+        goal ? `Goal: ${goal}` : null
+      ].filter(Boolean);
+
+      const url = waBase + `?text=${encodeURIComponent(msgLines.join("\n"))}`;
+      window.open(url, "_blank", "noopener");
+
+      const st = $("status");
+      st.className = "status ok";
+      st.textContent = "Opening WhatsApp with your enquiry…";
+    });
+
+    // start at step 1
+    setStep(1);
+  </script>
+</body>
+
+</html>
