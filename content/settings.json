@@ -1,10 +1,10 @@
 {
-    "phone": "8950723024",
-    "whatsapp_number": "918950723024",
-    "instagram_link": "https://www.instagram.com/trilokifightclub/",
-    "seasonal_banner": {
-        "text": "Join our Winter Camp - 50% Off First Month!",
-        "link": "#enquiry",
-        "enabled": true
-    }
+  "phone": "8950723023",
+  "whatsapp_number": "918950723023",
+  "instagram_link": "https://www.instagram.com/trilokifightclub?igsh=cTNxcnJyMWJudndp&utm_source=qr",
+  "seasonal_banner": {
+    "text": "Start your New Year with 30% off — punch procrastination in the face.",
+    "link": "https://www.instagram.com/trilokifightclub?igsh=cTNxcnJyMWJudndp&utm_source=qr",
+    "enabled": true
+  }
 }
