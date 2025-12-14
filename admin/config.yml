@@ -38,14 +38,14 @@ collections:
               - {label: "Name", name: "name", widget: "string"}
               - {label: "Specialty (Rank)", name: "specialty", widget: "string"}
               - {label: "Short Description", name: "description", widget: "string"}
-              - {label: "Focus Areas", name: "focus_areas", widget: "list", field: {label: "Area", widget: "string"}}
+              - {label: "Focus Areas", name: "focus_areas", widget: "list", field: {label: "Area", name: "area", widget: "string"}}
               - label: "Stats"
                 name: "stats"
                 widget: "list"
                 fields:
                    - {label: "Label (e.g. Pro)", name: "label", widget: "string"}
                    - {label: "Sub-label (e.g. Coaching)", name: "sub", widget: "string"}
-              - {label: "Tags", name: "tags", widget: "list", field: {label: "Tag", widget: "string"}}
+              - {label: "Tags", name: "tags", widget: "list", field: {label: "Tag", name: "tag", widget: "string"}}
 
   - name: "locations"
     label: "Locations"
