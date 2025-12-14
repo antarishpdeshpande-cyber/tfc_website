@@ -1,88 +1,88 @@
 {
-    "coaches": [
+  "coaches": [
+    {
+      "name": "Raman Lamba",
+      "specialty": "Striking",
+      "description": "Boxing • Muay Thai • Kick Boxing • Wushu",
+      "focus_areas": [
+        "Footwork & timing drills",
+        "Combination building",
+        "Controlled sparring structure"
+      ],
+      "stats": [
         {
-            "name": "Coach A",
-            "specialty": "Striking",
-            "description": "Boxing • Muay Thai • Pads • Defense",
-            "focus_areas": [
-                "Footwork & timing drills",
-                "Combination building",
-                "Controlled sparring structure"
-            ],
-            "stats": [
-                {
-                    "label": "Pro",
-                    "sub": "Coaching"
-                },
-                {
-                    "label": "Safe",
-                    "sub": "Technique"
-                },
-                {
-                    "label": "Fast",
-                    "sub": "Progress"
-                }
-            ],
-            "tags": [
-                "High IQ",
-                "All Levels"
-            ]
+          "label": "Pro",
+          "sub": "Coaching"
         },
         {
-            "name": "Coach B",
-            "specialty": "Grappling",
-            "description": "Wrestling • BJJ • Takedowns • Control",
-            "focus_areas": [
-                "Position first, submission next",
-                "Chain takedowns",
-                "Defense under pressure"
-            ],
-            "stats": [
-                {
-                    "label": "Base",
-                    "sub": "Wrestling"
-                },
-                {
-                    "label": "Flow",
-                    "sub": "BJJ"
-                },
-                {
-                    "label": "Live",
-                    "sub": "Rounds"
-                }
-            ],
-            "tags": [
-                "Takedowns",
-                "Escapes"
-            ]
+          "label": "Safe",
+          "sub": "Technique"
         },
         {
-            "name": "Coach C",
-            "specialty": "S&C",
-            "description": "Strength • Conditioning • Mobility • Rehab",
-            "focus_areas": [
-                "Fight conditioning blocks",
-                "Mobility + recovery routines",
-                "Strength cycles for athletes"
-            ],
-            "stats": [
-                {
-                    "label": "Gas",
-                    "sub": "Cardio"
-                },
-                {
-                    "label": "Power",
-                    "sub": "Strength"
-                },
-                {
-                    "label": "Move",
-                    "sub": "Mobility"
-                }
-            ],
-            "tags": [
-                "Injury-Safe",
-                "Performance"
-            ]
+          "label": "Fast",
+          "sub": "Progress"
         }
-    ]
+      ],
+      "tags": [
+        "High IQ",
+        "All Levels"
+      ]
+    },
+    {
+      "name": "Chanda",
+      "specialty": "Grappling",
+      "description": "Wrestling • BJJ • Takedowns • Control",
+      "focus_areas": [
+        "Position first, submission next",
+        "Chain takedowns",
+        "Defense under pressure"
+      ],
+      "stats": [
+        {
+          "label": "Base",
+          "sub": "Wrestling"
+        },
+        {
+          "label": "Flow",
+          "sub": "BJJ"
+        },
+        {
+          "label": "Live",
+          "sub": "Rounds"
+        }
+      ],
+      "tags": [
+        "Takedowns",
+        "Escapes"
+      ]
+    },
+    {
+      "name": "Mohit Lamba",
+      "specialty": "Striking",
+      "description": "Strength • Conditioning • Mobility • Rehab",
+      "focus_areas": [
+        "Fight conditioning blocks",
+        "Mobility + recovery routines",
+        "Strength cycles for athletes"
+      ],
+      "stats": [
+        {
+          "label": "Gas",
+          "sub": "Cardio"
+        },
+        {
+          "label": "Power",
+          "sub": "Strength"
+        },
+        {
+          "label": "Move",
+          "sub": "Mobility"
+        }
+      ],
+      "tags": [
+        "Injury-Safe",
+        "Performance"
+      ]
+    }
+  ]
 }
