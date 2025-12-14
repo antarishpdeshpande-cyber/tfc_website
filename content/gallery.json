@@ -1,3 +1,7 @@
 {
-    "images": []
+  "images": [
+    {
+      "image": "/assets/uploads/cover.jpg"
+    }
+  ]
 }
