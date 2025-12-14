@@ -6,6 +6,76 @@ media_folder: "assets/uploads"
 # public_folder: "/assets/uploads" # Optional, if media path differs in built site
 
 collections:
+  - name: "settings"
+    label: "Settings"
+    files:
+      - name: "general"
+        label: "General Settings"
+        file: "content/settings.json"
+        fields:
+          - {label: "Phone Number", name: "phone", widget: "string"}
+          - {label: "WhatsApp Number (without +)", name: "whatsapp_number", widget: "string"}
+          - {label: "Instagram Link", name: "instagram_link", widget: "string"}
+          - label: "Seasonal Banner"
+            name: "seasonal_banner"
+            widget: "object"
+            fields:
+              - {label: "Enabled", name: "enabled", widget: "boolean", default: false}
+              - {label: "Banner Text", name: "text", widget: "string"}
+              - {label: "Link", name: "link", widget: "string", default: "#enquiry"}
+
+  - name: "coaches"
+    label: "Coaches"
+    files:
+      - name: "list"
+        label: "Coach List"
+        file: "content/coaches.json"
+        fields:
+          - label: "Coaches"
+            name: "coaches"
+            widget: "list"
+            fields:
+              - {label: "Name", name: "name", widget: "string"}
+              - {label: "Specialty (Rank)", name: "specialty", widget: "string"}
+              - {label: "Short Description", name: "description", widget: "string"}
+              - {label: "Focus Areas", name: "focus_areas", widget: "list", field: {label: "Area", widget: "string"}}
+              - label: "Stats"
+                name: "stats"
+                widget: "list"
+                fields:
+                   - {label: "Label (e.g. Pro)", name: "label", widget: "string"}
+                   - {label: "Sub-label (e.g. Coaching)", name: "sub", widget: "string"}
+              - {label: "Tags", name: "tags", widget: "list", field: {label: "Tag", widget: "string"}}
+
+  - name: "locations"
+    label: "Locations"
+    files:
+      - name: "list"
+        label: "Location List"
+        file: "content/locations.json"
+        fields:
+           - label: "Locations"
+             name: "locations"
+             widget: "list"
+             fields:
+               - {label: "Location Name", name: "name", widget: "string"}
+               - {label: "Label (e.g. Training Hub)", name: "label", widget: "string"}
+               - {label: "Map URL", name: "map_link", widget: "string"}
+
+  - name: "quotes"
+    label: "Quotes"
+    files:
+      - name: "list"
+        label: "Quotes List"
+        file: "content/quotes.json"
+        fields:
+          - label: "Quotes"
+            name: "quotes"
+            widget: "list"
+            fields:
+              - {label: "Quote Text", name: "text", widget: "text"}
+              - {label: "Author", name: "author", widget: "string"}
+
   - name: "gallery"
     label: "Gallery"
     # User requested: "removed all other packages... keep it simple"

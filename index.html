@@ -120,18 +120,19 @@
     .brand img {
       width: 80px;
       height: 80px;
-      border-radius: 50%;
       object-fit: cover;
       box-shadow: 0 0 28px rgba(247, 198, 0, .22);
       border: none;
       animation: logoPulse 2.8s ease-in-out infinite;
+      /* Octagonal shape via clip-path */
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
     }
 
     @keyframes logoPulse {
 
       0%,
       100% {
-        filter: drop-shadow(0 0 0 rgba(247, 198, 0, .0));
+        filter: drop-shadow(0 0 0 rgba(247, 198, 0, 0));
         transform: translateY(0);
       }
 
@@ -139,6 +140,19 @@
         filter: drop-shadow(0 0 14px rgba(247, 198, 0, .35));
         transform: translateY(-1px);
       }
+    }
+
+    /* Seasonal Banner */
+    #seasonalBanner {
+      background: var(--y);
+      color: #000;
+      text-align: center;
+      padding: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      display: none;
+      /* hidden by default until loaded */
     }
 
     .brand .name {
@@ -942,6 +956,9 @@
 </head>
 
 <body>
+  <!-- Seasonal Banner -->
+  <a id="seasonalBanner" href="#"></a>
+
   <!-- WhatsApp instant enquiry -->
   <a class="wa" id="waBtn" target="_blank" rel="noopener">
     <span class="bubble" aria-hidden="true"></span>
@@ -969,8 +986,11 @@
       </nav>
 
       <div style="display:flex; gap:10px; align-items:center;">
-        <a class="btn impact" href="#tape">Watch Reels</a>
-        <a class="btn primary impact" href="#enquiry">Start Now →</a>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <a class="btn impact" href="https://www.instagram.com/trilokifightclub/" target="_blank"
+            id="followBtn">Follow</a>
+          <a class="btn primary impact" href="#enquiry">Start Now →</a>
+        </div>
       </div>
     </div>
   </header>
@@ -990,17 +1010,13 @@
           <div class="hero-actions">
             <a class="btn primary impact" href="#enquiry">Book a Trial →</a>
             <a class="btn impact" href="#training">Explore Training</a>
-            <button class="btn impact" id="personalizeBtn" type="button">Personalize</button>
           </div>
-
-          <div class="msg" id="personalMsg"></div>
         </div>
 
         <!-- Quote module -->
         <aside class="panel">
-          <div class="meta">
-            <div class="row"><span>📍 Locations</span><b>Sector 23A • C2 • New Palam Vihar</b></div>
-            <div class="row"><span>📞 Call</span><b>8950723024</b></div>
+          <div class="meta" id="headerMeta">
+            <!-- Populated via JS -->
           </div>
 
           <div class="quoteBox" aria-live="polite">
@@ -1367,96 +1383,129 @@
   </main>
 
   <script>
-    // ===== Data you provided =====
-    const PHONE_E164 = "918950723024"; // WhatsApp format: countrycode + number (India=91)
-    const LOCATIONS = ["Sector 23A", "C2", "New Palam Vihar (New Branch)"];
-
-    // Quotes (verified attributions)
-    // Muhammad Ali quote is documented by the Muhammad Ali Center. :contentReference[oaicite:0]{index=0}
-    // Mike Tyson quote is widely reported (example: Economic Times). :contentReference[oaicite:1]{index=1}
-    // Georges St-Pierre quote appears on his official Facebook post. :contentReference[oaicite:2]{index=2}
-    const QUOTES = [
-      {
-        text: "I hated every minute of training, but I said, 'Don't quit. Suffer now and live the rest of your life as a champion.'",
-        by: "Muhammad Ali"
-      },
-      {
-        text: "Everyone has a plan until they get punched in the mouth.",
-        by: "Mike Tyson"
-      },
-      {
-        text: "You don’t get better on the days when you feel like going. You get better on the days when you don’t want to go, but you go anyway.",
-        by: "Georges St-Pierre"
-      }
-    ];
-
-    // ===== Helpers =====
-    const $ = (id) => document.getElementById(id);
-    const year = new Date().getFullYear();
-    $("year").textContent = year;
-
-    // WhatsApp floating button (short, clean copy — not a WhatsApp-style paragraph)
-    const waBase = `https://wa.me/${PHONE_E164}`;
-    $("waBtn").href = waBase + `?text=${encodeURIComponent("Hi TFC — I want to enquire about training.")}`;
-
-    // ===== Quote rotator =====
-    let qi = 0;
-    function renderQuote() {
-      const q = QUOTES[qi % QUOTES.length];
-      $("quoteText").textContent = "“" + q.text + "”";
-      $("quoteBy").textContent = "— " + q.by;
-    }
-
-    renderQuote();
-    setInterval(() => { qi++; renderQuote(); }, 5000);
-
-    // ===== Personalization =====
-    const personalMsg = $("personalMsg");
-    const storedName = localStorage.getItem("tfc_name");
-    if (storedName) {
-      personalMsg.textContent = `Welcome back, ${storedName}. Gloves on — let’s build your game plan.`;
-    }
-    $("personalizeBtn").addEventListener("click", () => {
-      const n = prompt("What should we call you on this device?");
-      if (!n) return;
-      localStorage.setItem("tfc_name", n.trim().slice(0, 40));
-      personalMsg.textContent = `Welcome, ${n.trim().slice(0, 40)}. Your first win is showing up.`;
-    });
-
-    // ===== Scroll-trigger punch animations =====
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add("on");
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
-
-    // ===== Fight-tape hover reels =====
-    const tapes = document.querySelectorAll("video[data-autoplay]");
-    tapes.forEach(v => {
-      const host = v.closest(".tape");
-
-      // Desktop hover
-      host.addEventListener("mouseenter", () => { v.play().catch(() => { }); });
-      host.addEventListener("mouseleave", () => { v.pause(); v.currentTime = 0; });
-
-      // Mobile/Touch tap
-      host.addEventListener("click", (e) => {
-        if (v.paused) {
-          v.play().catch(() => { });
-        } else {
-          v.pause();
+    // ===== Content Loading =====
+    Promise.all([
+      fetch('/content/settings.json').then(r => r.json()),
+      fetch('/content/coaches.json').then(r => r.json()),
+      fetch('/content/locations.json').then(r => r.json()),
+      fetch('/content/quotes.json').then(r => r.json())
+    ]).then(([settings, coaches, locations, quotes]) => {
+      // --- Settings ---
+      if (settings) {
+        // Seasonal Banner
+        const sb = document.getElementById('seasonalBanner');
+        if (settings.seasonal_banner && settings.seasonal_banner.enabled) {
+          sb.textContent = settings.seasonal_banner.text;
+          sb.href = settings.seasonal_banner.link;
+          sb.style.display = 'block';
         }
-      });
-    });
 
-    // ===== Coach Cards (Tap to Flip) =====
-    document.querySelectorAll(".flip").forEach(card => {
-      card.addEventListener("click", () => {
-        const inner = card.querySelector(".flipInner");
-        inner.classList.toggle("flipped");
-      });
-    });
+        // Phone
+        const phoneDisplay = settings.phone || "8950723024";
+        const waNumber = settings.whatsapp_number || "918950723024";
+
+        // Update WA floating button
+        const waBtn = document.getElementById('waBtn');
+        if (waBtn) waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent("Hi TFC — I want to enquire about training.")}`;
+
+        // Update Header/Footer Phone links if any (we will regenerate meta section)
+
+        // Instagram
+        const followBtn = document.getElementById('followBtn');
+        if (followBtn && settings.instagram_link) {
+          followBtn.href = settings.instagram_link;
+        }
+      }
+
+      // --- Locations ---
+      if (locations && locations.locations) {
+        const locList = locations.locations.map(l => l.name).join(' • ');
+
+        // Header Meta Update
+        const headerMeta = document.getElementById('headerMeta');
+        if (headerMeta && settings) {
+          headerMeta.innerHTML = `
+                    <div class="row"><span>📍 Locations</span><b>${locList}</b></div>
+                    <div class="row"><span>📞 Call</span><a href="tel:${settings.phone}" style="color:var(--y2);text-decoration:none;"><b>${settings.phone}</b></a></div>
+                `;
+        }
+
+        // Enquiry Locations
+        const enquiryMeta = document.querySelector('.enquiryWrap .panel .meta');
+        if (enquiryMeta) {
+          let html = '';
+          locations.locations.forEach(l => {
+            html += `<div class="row"><span>📍 ${l.name}</span><a href="${l.map_link}" target="_blank" style="color:var(--y2); text-decoration:none;"><b>${l.label}</b></a></div>`;
+          });
+          if (settings) {
+            html += `<div class="row"><span>📞 Call</span><b>${settings.phone}</b></div>`;
+          }
+          enquiryMeta.innerHTML = html;
+        }
+
+        // Update Form Select Options
+        const locSelect = document.getElementById('loc');
+        if (locSelect) {
+          locSelect.innerHTML = locations.locations.map(l => `<option>${l.name}</option>`).join('');
+        }
+      }
+
+      // --- Coaches ---
+      if (coaches && coaches.coaches) {
+        const coachGrid = document.querySelector('.coachGrid');
+        if (coachGrid) {
+          coachGrid.innerHTML = coaches.coaches.map(c => `
+                    <div class="flip">
+                      <div class="flipInner">
+                        <div class="face front">
+                          <div class="fcTitle">
+                            <h3 class="fcName">${c.name}</h3>
+                            <span class="rank">${c.specialty}</span>
+                          </div>
+                          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">${c.description}</p>
+                          <div class="stats">
+                             ${c.stats.map(s => `<div class="stat"><b>${s.label}</b><span>${s.sub}</span></div>`).join('')}
+                          </div>
+                          <div class="tagRow" style="margin-top:12px;">
+                             ${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                          </div>
+                        </div>
+                        <div class="face back">
+                          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Focus Areas</h3>
+                          <ul style="margin:10px 0 0; padding-left:18px; color: var(--muted); font-size:13px; line-height:1.6;">
+                            ${c.focus_areas.map(f => `<li>${f}</li>`).join('')}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                 `).join('');
+
+          // Re-attach listeners for new elements
+          document.querySelectorAll(".flip").forEach(card => {
+            card.addEventListener("click", () => {
+              const inner = card.querySelector(".flipInner");
+              inner.classList.toggle("flipped");
+            });
+          });
+        }
+      }
+
+      // --- Quotes ---
+      if (quotes && quotes.quotes) {
+        let qi = 0;
+        const quoteText = document.getElementById('quoteText');
+        const quoteBy = document.getElementById('quoteBy');
+
+        function renderQuote() {
+          const q = quotes.quotes[qi % quotes.quotes.length];
+          quoteText.textContent = "“" + q.text + "”";
+          quoteBy.textContent = "— " + q.author;
+        }
+        renderQuote();
+        setInterval(() => { qi++; renderQuote(); }, 5000);
+      }
+
+    }).catch(e => console.error("Content load error:", e));
 
     // ===== Interactive enquiry form (3 steps) =====
     const sd1 = $("sd1"), sd2 = $("sd2"), sd3 = $("sd3");
@@ -1559,55 +1608,133 @@
     setStep(1);
   </script>
   <script>
-    // ===== Remote Content Loader (Neon DB) =====
-    (async function loadRemoteContent() {
-      try {
-        const res = await fetch('/.netlify/functions/get_content');
-        if (!res.ok) return;
-        const dbData = await res.json();
-        if (!dbData || !dbData.wa) return; // Basic validation
+    // ===== Helpers & Year =====
+    const $ = (id) => document.getElementById(id);
+    const year = new Date().getFullYear();
+    const yearEl = $("year");
+    if (yearEl) yearEl.textContent = year;
 
-        // Update WhatsApp
-        // Note: We need to find all WhatsApp links.
-        const waLinks = document.querySelectorAll('a[href*="wa.me"]');
-        waLinks.forEach(link => {
-          // Preserve the original text message if possible, just swap number
-          // Simply replacing href is easier:
-          link.href = `https://wa.me/${dbData.wa}?text=I'm%20interested%20in%20joining%20TFC`;
-        });
-
-        // Update Coaches
-        if (dbData.cA) {
-          const cards = document.querySelectorAll('.flip');
-          if (cards[0]) {
-            cards[0].querySelector('.fcName').textContent = dbData.cA.name;
-            cards[0].querySelector('.fcRank').textContent = dbData.cA.rank;
-          }
-          if (cards[1] && dbData.cB) {
-            cards[1].querySelector('.fcName').textContent = dbData.cB.name;
-            cards[1].querySelector('.fcRank').textContent = dbData.cB.rank;
-          }
-          if (cards[2] && dbData.cC) {
-            cards[2].querySelector('.fcName').textContent = dbData.cC.name;
-            cards[2].querySelector('.fcRank').textContent = dbData.cC.rank;
-          }
+    // ===== Content Loading =====
+    Promise.all([
+      fetch('/content/settings.json').then(r => r.json()),
+      fetch('/content/coaches.json').then(r => r.json()),
+      fetch('/content/locations.json').then(r => r.json()),
+      fetch('/content/quotes.json').then(r => r.json())
+    ]).then(([settings, coaches, locations, quotes]) => {
+      // --- Settings ---
+      if (settings) {
+        // Seasonal Banner
+        const sb = document.getElementById('seasonalBanner');
+        if (settings.seasonal_banner && settings.seasonal_banner.enabled) {
+          sb.textContent = settings.seasonal_banner.text;
+          sb.href = settings.seasonal_banner.link;
+          sb.style.display = 'block';
         }
 
-        // Update Videos
-        if (dbData.v1) {
-          const vids = document.querySelectorAll('video');
-          if (vids[0] && dbData.v1) vids[0].src = dbData.v1;
-          if (vids[1] && dbData.v2) vids[1].src = dbData.v2;
-          if (vids[2] && dbData.v3) vids[2].src = dbData.v3;
-          if (vids[3] && dbData.v4) vids[3].src = dbData.v4;
+        // Phone
+        const phoneDisplay = settings.phone || "8950723024";
+        const waNumber = settings.whatsapp_number || "918950723024";
+
+        // Update WA floating button
+        const waBtn = document.getElementById('waBtn');
+        if (waBtn) waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent("Hi TFC — I want to enquire about training.")}`;
+
+        // Instagram
+        const followBtn = document.getElementById('followBtn');
+        if (followBtn && settings.instagram_link) {
+          followBtn.href = settings.instagram_link;
         }
-
-        console.log("Remote content loaded.");
-
-      } catch (e) {
-        console.log("Using default content.", e);
       }
-    })();
+
+      // --- Locations ---
+      if (locations && locations.locations) {
+        const locList = locations.locations.map(l => l.name).join(' • ');
+
+        // Header Meta Update
+        const headerMeta = document.getElementById('headerMeta');
+        if (headerMeta && settings) {
+          headerMeta.innerHTML = `
+                    <div class="row"><span>📍 Locations</span><b>${locList}</b></div>
+                    <div class="row"><span>📞 Call</span><a href="tel:${settings.phone}" style="color:var(--y2);text-decoration:none;"><b>${settings.phone}</b></a></div>
+                `;
+        }
+
+        // Enquiry Locations
+        const enquiryMeta = document.querySelector('.enquiryWrap .panel .meta');
+        if (enquiryMeta) {
+          let html = '';
+          locations.locations.forEach(l => {
+            html += `<div class="row"><span>📍 ${l.name}</span><a href="${l.map_link}" target="_blank" style="color:var(--y2); text-decoration:none;"><b>${l.label}</b></a></div>`;
+          });
+          if (settings) {
+            html += `<div class="row"><span>📞 Call</span><b>${settings.phone}</b></div>`;
+          }
+          enquiryMeta.innerHTML = html;
+        }
+
+        // Update Form Select Options
+        const locSelect = document.getElementById('loc');
+        if (locSelect) {
+          locSelect.innerHTML = locations.locations.map(l => `<option>${l.name}</option>`).join('');
+        }
+      }
+
+      // --- Coaches ---
+      if (coaches && coaches.coaches) {
+        const coachGrid = document.querySelector('.coachGrid');
+        if (coachGrid) {
+          coachGrid.innerHTML = coaches.coaches.map(c => `
+                    <div class="flip">
+                      <div class="flipInner">
+                        <div class="face front">
+                          <div class="fcTitle">
+                            <h3 class="fcName">${c.name}</h3>
+                            <span class="rank">${c.specialty}</span>
+                          </div>
+                          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">${c.description}</p>
+                          <div class="stats">
+                             ${c.stats.map(s => `<div class="stat"><b>${s.label}</b><span>${s.sub}</span></div>`).join('')}
+                          </div>
+                          <div class="tagRow" style="margin-top:12px;">
+                             ${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                          </div>
+                        </div>
+                        <div class="face back">
+                          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Focus Areas</h3>
+                          <ul style="margin:10px 0 0; padding-left:18px; color: var(--muted); font-size:13px; line-height:1.6;">
+                            ${c.focus_areas.map(f => `<li>${f}</li>`).join('')}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                 `).join('');
+
+          // Re-attach listeners for new elements
+          document.querySelectorAll(".flip").forEach(card => {
+            card.addEventListener("click", () => {
+              const inner = card.querySelector(".flipInner");
+              inner.classList.toggle("flipped");
+            });
+          });
+        }
+      }
+
+      // --- Quotes ---
+      if (quotes && quotes.quotes) {
+        let qi = 0;
+        const quoteText = document.getElementById('quoteText');
+        const quoteBy = document.getElementById('quoteBy');
+
+        function renderQuote() {
+          const q = quotes.quotes[qi % quotes.quotes.length];
+          quoteText.textContent = "“" + q.text + "”";
+          quoteBy.textContent = "— " + q.author;
+        }
+        renderQuote();
+        setInterval(() => { qi++; renderQuote(); }, 5000);
+      }
+
+    }).catch(e => console.error("Content load error:", e));
   </script>
   <!-- Netlify Identity Redirect -->
   <script>
