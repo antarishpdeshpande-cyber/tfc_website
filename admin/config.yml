@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: master
 
 media_folder: "assets/uploads"
 # public_folder: "/assets/uploads" # Optional, if media path differs in built site
@@ -8,7 +8,6 @@ media_folder: "assets/uploads"
 collections:
   - name: "gallery"
     label: "Gallery"
-    folder: "content/gallery" # We'll use folder collection for individual items or file collection for one big file.
     # User requested: "removed all other packages... keep it simple"
     # A single file collection is simpler for a list of gallery items than creating a file per image.
     # Let's switch to a file collection approach, editing one data file.
