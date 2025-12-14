@@ -1,0 +1,27 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+# public_folder: "/assets/uploads" # Optional, if media path differs in built site
+
+collections:
+  - name: "gallery"
+    label: "Gallery"
+    folder: "content/gallery" # We'll use folder collection for individual items or file collection for one big file.
+    # User requested: "removed all other packages... keep it simple"
+    # A single file collection is simpler for a list of gallery items than creating a file per image.
+    # Let's switch to a file collection approach, editing one data file.
+    files:
+      - name: "items"
+        label: "Gallery Items"
+        file: "content/gallery.json"
+        description: "List of images and links for the homepage gallery"
+        fields:
+          - label: "Gallery List"
+            name: "images"
+            widget: "list"
+            fields:
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Instagram Link", name: "instagram_link", widget: "string", required: false}
+              - {label: "Caption/Title", name: "title", widget: "string", required: false}
