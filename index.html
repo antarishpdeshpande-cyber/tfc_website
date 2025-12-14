@@ -1383,6 +1383,41 @@
   </main>
 
   <script>
+    // ===== Helpers & Year =====
+    const $ = (id) => document.getElementById(id);
+    const year = new Date().getFullYear();
+    const yearEl = $("year");
+    if (yearEl) yearEl.textContent = year;
+
+    // ===== Scroll-trigger punch animations =====
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add("on");
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    // ===== Fight-tape hover reels =====
+    const tapes = document.querySelectorAll("video[data-autoplay]");
+    tapes.forEach(v => {
+      const host = v.closest(".tape");
+      if (!host) return;
+      host.addEventListener("mouseenter", () => { v.play().catch(() => { }); });
+      host.addEventListener("mouseleave", () => { v.pause(); v.currentTime = 0; });
+      host.addEventListener("click", (e) => {
+        if (v.paused) { v.play().catch(() => { }); } else { v.pause(); }
+      });
+    });
+
+    // ===== Coach Cards (Tap to Flip) - Event Delegation =====
+    document.body.addEventListener("click", (e) => {
+      const card = e.target.closest(".flip");
+      if (card) {
+        const inner = card.querySelector(".flipInner");
+        if (inner) inner.classList.toggle("flipped");
+      }
+    });
+
     // ===== Content Loading =====
     Promise.all([
       fetch('/content/settings.json').then(r => r.json()),
