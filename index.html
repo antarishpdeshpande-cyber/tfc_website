@@ -756,10 +756,15 @@
       transform: translateY(-1px);
     }
 
-    .chip.on {
+    .chip.on,
+    .chip[aria-pressed="true"] {
       background: rgba(247, 198, 0, .14);
       border-color: rgba(247, 198, 0, .35);
       color: var(--y2);
+    }
+
+    .chip:focus-visible {
+      border-radius: 999px;
     }
 
     .rangeRow {
@@ -1305,18 +1310,18 @@
               </div>
             </div>
 
-            <label>Choose training (tap to select)</label>
-            <div class="chips" id="disciplines">
-              <div class="chip" data-v="MMA">MMA</div>
-              <div class="chip" data-v="Boxing">Boxing</div>
-              <div class="chip" data-v="Muay Thai">Muay Thai</div>
-              <div class="chip" data-v="Wrestling">Wrestling</div>
-              <div class="chip" data-v="Wushu">Wushu</div>
-              <div class="chip" data-v="BJJ">BJJ</div>
-              <div class="chip" data-v="S&C">Strength & Conditioning</div>
-              <div class="chip" data-v="Mobility">Mobility</div>
-              <div class="chip" data-v="Diet">Diet Consultation</div>
-              <div class="chip" data-v="PT">Personal Training</div>
+            <label id="training-label">Choose training (tap to select)</label>
+            <div class="chips" id="disciplines" role="group" aria-labelledby="training-label">
+              <button type="button" class="chip" aria-pressed="false" data-v="MMA">MMA</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="Boxing">Boxing</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="Muay Thai">Muay Thai</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="Wrestling">Wrestling</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="Wushu">Wushu</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="BJJ">BJJ</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="S&C">Strength & Conditioning</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="Mobility">Mobility</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="Diet">Diet Consultation</button>
+              <button type="button" class="chip" aria-pressed="false" data-v="PT">Personal Training</button>
             </div>
 
             <div style="display:flex; justify-content:flex-end; margin-top:12px;">
@@ -1385,6 +1390,7 @@
   <script>
     // ===== Helpers & Year =====
     const $ = (id) => document.getElementById(id);
+    const waBase = "https://wa.me/918950723024";
     const year = new Date().getFullYear();
     const yearEl = $("year");
     if (yearEl) yearEl.textContent = year;
@@ -1560,8 +1566,15 @@
     chips.forEach(c => {
       c.addEventListener("click", () => {
         const v = c.dataset.v;
-        if (selected.has(v)) { selected.delete(v); c.classList.remove("on"); }
-        else { selected.add(v); c.classList.add("on"); }
+        if (selected.has(v)) {
+          selected.delete(v);
+          c.classList.remove("on");
+          c.setAttribute("aria-pressed", "false");
+        } else {
+          selected.add(v);
+          c.classList.add("on");
+          c.setAttribute("aria-pressed", "true");
+        }
       });
     });
 
@@ -1641,135 +1654,6 @@
 
     // start at step 1
     setStep(1);
-  </script>
-  <script>
-    // ===== Helpers & Year =====
-    const $ = (id) => document.getElementById(id);
-    const year = new Date().getFullYear();
-    const yearEl = $("year");
-    if (yearEl) yearEl.textContent = year;
-
-    // ===== Content Loading =====
-    Promise.all([
-      fetch('/content/settings.json').then(r => r.json()),
-      fetch('/content/coaches.json').then(r => r.json()),
-      fetch('/content/locations.json').then(r => r.json()),
-      fetch('/content/quotes.json').then(r => r.json())
-    ]).then(([settings, coaches, locations, quotes]) => {
-      // --- Settings ---
-      if (settings) {
-        // Seasonal Banner
-        const sb = document.getElementById('seasonalBanner');
-        if (settings.seasonal_banner && settings.seasonal_banner.enabled) {
-          sb.textContent = settings.seasonal_banner.text;
-          sb.href = settings.seasonal_banner.link;
-          sb.style.display = 'block';
-        }
-
-        // Phone
-        const phoneDisplay = settings.phone || "8950723024";
-        const waNumber = settings.whatsapp_number || "918950723024";
-
-        // Update WA floating button
-        const waBtn = document.getElementById('waBtn');
-        if (waBtn) waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent("Hi TFC — I want to enquire about training.")}`;
-
-        // Instagram
-        const followBtn = document.getElementById('followBtn');
-        if (followBtn && settings.instagram_link) {
-          followBtn.href = settings.instagram_link;
-        }
-      }
-
-      // --- Locations ---
-      if (locations && locations.locations) {
-        const locList = locations.locations.map(l => l.name).join(' • ');
-
-        // Header Meta Update
-        const headerMeta = document.getElementById('headerMeta');
-        if (headerMeta && settings) {
-          headerMeta.innerHTML = `
-                    <div class="row"><span>📍 Locations</span><b>${locList}</b></div>
-                    <div class="row"><span>📞 Call</span><a href="tel:${settings.phone}" style="color:var(--y2);text-decoration:none;"><b>${settings.phone}</b></a></div>
-                `;
-        }
-
-        // Enquiry Locations
-        const enquiryMeta = document.querySelector('.enquiryWrap .panel .meta');
-        if (enquiryMeta) {
-          let html = '';
-          locations.locations.forEach(l => {
-            html += `<div class="row"><span>📍 ${l.name}</span><a href="${l.map_link}" target="_blank" style="color:var(--y2); text-decoration:none;"><b>${l.label}</b></a></div>`;
-          });
-          if (settings) {
-            html += `<div class="row"><span>📞 Call</span><b>${settings.phone}</b></div>`;
-          }
-          enquiryMeta.innerHTML = html;
-        }
-
-        // Update Form Select Options
-        const locSelect = document.getElementById('loc');
-        if (locSelect) {
-          locSelect.innerHTML = locations.locations.map(l => `<option>${l.name}</option>`).join('');
-        }
-      }
-
-      // --- Coaches ---
-      if (coaches && coaches.coaches) {
-        const coachGrid = document.querySelector('.coachGrid');
-        if (coachGrid) {
-          coachGrid.innerHTML = coaches.coaches.map(c => `
-                    <div class="flip">
-                      <div class="flipInner">
-                        <div class="face front">
-                          <div class="fcTitle">
-                            <h3 class="fcName">${c.name}</h3>
-                            <span class="rank">${c.specialty}</span>
-                          </div>
-                          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">${c.description}</p>
-                          <div class="stats">
-                             ${c.stats.map(s => `<div class="stat"><b>${s.label}</b><span>${s.sub}</span></div>`).join('')}
-                          </div>
-                          <div class="tagRow" style="margin-top:12px;">
-                             ${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}
-                          </div>
-                        </div>
-                        <div class="face back">
-                          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Focus Areas</h3>
-                          <ul style="margin:10px 0 0; padding-left:18px; color: var(--muted); font-size:13px; line-height:1.6;">
-                            ${c.focus_areas.map(f => `<li>${f}</li>`).join('')}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                 `).join('');
-
-          // Re-attach listeners for new elements
-          document.querySelectorAll(".flip").forEach(card => {
-            card.addEventListener("click", () => {
-              const inner = card.querySelector(".flipInner");
-              inner.classList.toggle("flipped");
-            });
-          });
-        }
-      }
-
-      // --- Quotes ---
-      if (quotes && quotes.quotes) {
-        let qi = 0;
-        const quoteText = document.getElementById('quoteText');
-        const quoteBy = document.getElementById('quoteBy');
-
-        function renderQuote() {
-          const q = quotes.quotes[qi % quotes.quotes.length];
-          quoteText.textContent = "“" + q.text + "”";
-          quoteBy.textContent = "— " + q.author;
-        }
-        renderQuote();
-        setInterval(() => { qi++; renderQuote(); }, 5000);
-      }
-
-    }).catch(e => console.error("Content load error:", e));
   </script>
   <!-- Netlify Identity Redirect -->
   <script>

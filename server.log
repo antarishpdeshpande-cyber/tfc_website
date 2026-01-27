@@ -1,0 +1,14 @@
+127.0.0.1 - - [27/Jan/2026 21:25:06] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:06] "GET /tfc-logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:07] "GET /content/settings.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:07] "GET /content/coaches.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:07] "GET /content/quotes.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:07] "GET /content/locations.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:07] "GET /content/gallery.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:30] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:30] "GET /tfc-logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:30] "GET /content/settings.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:30] "GET /content/quotes.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:30] "GET /content/coaches.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:30] "GET /content/locations.json HTTP/1.1" 200 -
+127.0.0.1 - - [27/Jan/2026 21:25:30] "GET /content/gallery.json HTTP/1.1" 200 -
