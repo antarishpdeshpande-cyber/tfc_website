@@ -960,7 +960,7 @@
   <a id="seasonalBanner" href="#"></a>
 
   <!-- WhatsApp instant enquiry -->
-  <a class="wa" id="waBtn" target="_blank" rel="noopener">
+  <a class="wa" id="waBtn" target="_blank" rel="noopener noreferrer">
     <span class="bubble" aria-hidden="true"></span>
     WhatsApp Enquiry
   </a>
@@ -987,7 +987,7 @@
 
       <div style="display:flex; gap:10px; align-items:center;">
         <div style="display:flex; gap:10px; align-items:center;">
-          <a class="btn impact" href="https://www.instagram.com/trilokifightclub/" target="_blank"
+          <a class="btn impact" href="https://www.instagram.com/trilokifightclub/" target="_blank" rel="noopener noreferrer"
             id="followBtn">Follow</a>
           <a class="btn primary impact" href="#enquiry">Start Now →</a>
         </div>
@@ -1385,6 +1385,12 @@
   <script>
     // ===== Helpers & Year =====
     const $ = (id) => document.getElementById(id);
+
+    // Security: HTML Escaping function
+    function escapeHtml(s) {
+      return (s || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+    }
+
     const year = new Date().getFullYear();
     const yearEl = $("year");
     if (yearEl) yearEl.textContent = year;
@@ -1454,14 +1460,14 @@
 
       // --- Locations ---
       if (locations && locations.locations) {
-        const locList = locations.locations.map(l => l.name).join(' • ');
+        const locList = locations.locations.map(l => escapeHtml(l.name)).join(' • ');
 
         // Header Meta Update
         const headerMeta = document.getElementById('headerMeta');
         if (headerMeta && settings) {
           headerMeta.innerHTML = `
                     <div class="row"><span>📍 Locations</span><b>${locList}</b></div>
-                    <div class="row"><span>📞 Call</span><a href="tel:${settings.phone}" style="color:var(--y2);text-decoration:none;"><b>${settings.phone}</b></a></div>
+                    <div class="row"><span>📞 Call</span><a href="tel:${escapeHtml(settings.phone)}" style="color:var(--y2);text-decoration:none;"><b>${escapeHtml(settings.phone)}</b></a></div>
                 `;
         }
 
@@ -1470,10 +1476,10 @@
         if (enquiryMeta) {
           let html = '';
           locations.locations.forEach(l => {
-            html += `<div class="row"><span>📍 ${l.name}</span><a href="${l.map_link}" target="_blank" style="color:var(--y2); text-decoration:none;"><b>${l.label}</b></a></div>`;
+            html += `<div class="row"><span>📍 ${escapeHtml(l.name)}</span><a href="${escapeHtml(l.map_link)}" target="_blank" rel="noopener noreferrer" style="color:var(--y2); text-decoration:none;"><b>${escapeHtml(l.label)}</b></a></div>`;
           });
           if (settings) {
-            html += `<div class="row"><span>📞 Call</span><b>${settings.phone}</b></div>`;
+            html += `<div class="row"><span>📞 Call</span><b>${escapeHtml(settings.phone)}</b></div>`;
           }
           enquiryMeta.innerHTML = html;
         }
@@ -1481,7 +1487,7 @@
         // Update Form Select Options
         const locSelect = document.getElementById('loc');
         if (locSelect) {
-          locSelect.innerHTML = locations.locations.map(l => `<option>${l.name}</option>`).join('');
+          locSelect.innerHTML = locations.locations.map(l => `<option>${escapeHtml(l.name)}</option>`).join('');
         }
       }
 
@@ -1494,21 +1500,21 @@
                       <div class="flipInner">
                         <div class="face front">
                           <div class="fcTitle">
-                            <h3 class="fcName">${c.name}</h3>
-                            <span class="rank">${c.specialty}</span>
+                            <h3 class="fcName">${escapeHtml(c.name)}</h3>
+                            <span class="rank">${escapeHtml(c.specialty)}</span>
                           </div>
-                          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">${c.description}</p>
+                          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">${escapeHtml(c.description)}</p>
                           <div class="stats">
-                             ${c.stats.map(s => `<div class="stat"><b>${s.label}</b><span>${s.sub}</span></div>`).join('')}
+                             ${c.stats.map(s => `<div class="stat"><b>${escapeHtml(s.label)}</b><span>${escapeHtml(s.sub)}</span></div>`).join('')}
                           </div>
                           <div class="tagRow" style="margin-top:12px;">
-                             ${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                             ${c.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
                           </div>
                         </div>
                         <div class="face back">
                           <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Focus Areas</h3>
                           <ul style="margin:10px 0 0; padding-left:18px; color: var(--muted); font-size:13px; line-height:1.6;">
-                            ${c.focus_areas.map(f => `<li>${f}</li>`).join('')}
+                            ${c.focus_areas.map(f => `<li>${escapeHtml(f)}</li>`).join('')}
                           </ul>
                         </div>
                       </div>
@@ -1606,10 +1612,6 @@
         `<span class="small">Tap “Send via WhatsApp” to share this instantly.</span>`;
     }
 
-    function escapeHtml(s) {
-      return (s || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
-    }
-
     $("sendWA").addEventListener("click", () => {
       const name = $("name").value.trim();
       const phone = $("phone").value.replace(/[^\d]/g, "");
@@ -1641,135 +1643,6 @@
 
     // start at step 1
     setStep(1);
-  </script>
-  <script>
-    // ===== Helpers & Year =====
-    const $ = (id) => document.getElementById(id);
-    const year = new Date().getFullYear();
-    const yearEl = $("year");
-    if (yearEl) yearEl.textContent = year;
-
-    // ===== Content Loading =====
-    Promise.all([
-      fetch('/content/settings.json').then(r => r.json()),
-      fetch('/content/coaches.json').then(r => r.json()),
-      fetch('/content/locations.json').then(r => r.json()),
-      fetch('/content/quotes.json').then(r => r.json())
-    ]).then(([settings, coaches, locations, quotes]) => {
-      // --- Settings ---
-      if (settings) {
-        // Seasonal Banner
-        const sb = document.getElementById('seasonalBanner');
-        if (settings.seasonal_banner && settings.seasonal_banner.enabled) {
-          sb.textContent = settings.seasonal_banner.text;
-          sb.href = settings.seasonal_banner.link;
-          sb.style.display = 'block';
-        }
-
-        // Phone
-        const phoneDisplay = settings.phone || "8950723024";
-        const waNumber = settings.whatsapp_number || "918950723024";
-
-        // Update WA floating button
-        const waBtn = document.getElementById('waBtn');
-        if (waBtn) waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent("Hi TFC — I want to enquire about training.")}`;
-
-        // Instagram
-        const followBtn = document.getElementById('followBtn');
-        if (followBtn && settings.instagram_link) {
-          followBtn.href = settings.instagram_link;
-        }
-      }
-
-      // --- Locations ---
-      if (locations && locations.locations) {
-        const locList = locations.locations.map(l => l.name).join(' • ');
-
-        // Header Meta Update
-        const headerMeta = document.getElementById('headerMeta');
-        if (headerMeta && settings) {
-          headerMeta.innerHTML = `
-                    <div class="row"><span>📍 Locations</span><b>${locList}</b></div>
-                    <div class="row"><span>📞 Call</span><a href="tel:${settings.phone}" style="color:var(--y2);text-decoration:none;"><b>${settings.phone}</b></a></div>
-                `;
-        }
-
-        // Enquiry Locations
-        const enquiryMeta = document.querySelector('.enquiryWrap .panel .meta');
-        if (enquiryMeta) {
-          let html = '';
-          locations.locations.forEach(l => {
-            html += `<div class="row"><span>📍 ${l.name}</span><a href="${l.map_link}" target="_blank" style="color:var(--y2); text-decoration:none;"><b>${l.label}</b></a></div>`;
-          });
-          if (settings) {
-            html += `<div class="row"><span>📞 Call</span><b>${settings.phone}</b></div>`;
-          }
-          enquiryMeta.innerHTML = html;
-        }
-
-        // Update Form Select Options
-        const locSelect = document.getElementById('loc');
-        if (locSelect) {
-          locSelect.innerHTML = locations.locations.map(l => `<option>${l.name}</option>`).join('');
-        }
-      }
-
-      // --- Coaches ---
-      if (coaches && coaches.coaches) {
-        const coachGrid = document.querySelector('.coachGrid');
-        if (coachGrid) {
-          coachGrid.innerHTML = coaches.coaches.map(c => `
-                    <div class="flip">
-                      <div class="flipInner">
-                        <div class="face front">
-                          <div class="fcTitle">
-                            <h3 class="fcName">${c.name}</h3>
-                            <span class="rank">${c.specialty}</span>
-                          </div>
-                          <p style="margin:6px 0 0;color:var(--muted);font-size:13px;">${c.description}</p>
-                          <div class="stats">
-                             ${c.stats.map(s => `<div class="stat"><b>${s.label}</b><span>${s.sub}</span></div>`).join('')}
-                          </div>
-                          <div class="tagRow" style="margin-top:12px;">
-                             ${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}
-                          </div>
-                        </div>
-                        <div class="face back">
-                          <h3 style="margin:0;font-family:Bebas Neue,Inter,sans-serif;letter-spacing:.8px;">Focus Areas</h3>
-                          <ul style="margin:10px 0 0; padding-left:18px; color: var(--muted); font-size:13px; line-height:1.6;">
-                            ${c.focus_areas.map(f => `<li>${f}</li>`).join('')}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                 `).join('');
-
-          // Re-attach listeners for new elements
-          document.querySelectorAll(".flip").forEach(card => {
-            card.addEventListener("click", () => {
-              const inner = card.querySelector(".flipInner");
-              inner.classList.toggle("flipped");
-            });
-          });
-        }
-      }
-
-      // --- Quotes ---
-      if (quotes && quotes.quotes) {
-        let qi = 0;
-        const quoteText = document.getElementById('quoteText');
-        const quoteBy = document.getElementById('quoteBy');
-
-        function renderQuote() {
-          const q = quotes.quotes[qi % quotes.quotes.length];
-          quoteText.textContent = "“" + q.text + "”";
-          quoteBy.textContent = "— " + q.author;
-        }
-        renderQuote();
-        setInterval(() => { qi++; renderQuote(); }, 5000);
-      }
-
-    }).catch(e => console.error("Content load error:", e));
   </script>
   <!-- Netlify Identity Redirect -->
   <script>
@@ -1805,17 +1678,17 @@
 
                 let mediaContent = '';
                 if (item.image) {
-                  mediaContent = `<img src="${item.image}" alt="${item.title || 'Gallery Image'}" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+                  mediaContent = `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || 'Gallery Image')}" style="width:100%; height:100%; object-fit:cover; display:block;">`;
                 }
 
                 // If Instagram link is present, wrap in anchor
                 if (item.instagram_link) {
-                  mediaContent = `<a href="${item.instagram_link}" target="_blank" rel="noopener noreferrer">${mediaContent}</a>`;
+                  mediaContent = `<a href="${escapeHtml(item.instagram_link)}" target="_blank" rel="noopener noreferrer">${mediaContent}</a>`;
                 }
 
                 tapeDiv.innerHTML = `
                                 <div class="topbar">
-                                    <div class="name">${item.title || 'TFC Gallery'}</div>
+                                    <div class="name">${escapeHtml(item.title || 'TFC Gallery')}</div>
                                     <div class="pill">Follow</div>
                                 </div>
                                 <div class="media">
