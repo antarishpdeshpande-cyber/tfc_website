@@ -1709,7 +1709,7 @@
 
                 let mediaContent = '';
                 if (item.image) {
-                  mediaContent = `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || 'Gallery Image')}" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+                  mediaContent = `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || 'Gallery Image')}" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">`;
                 }
 
                 // If Instagram link is present, wrap in anchor
