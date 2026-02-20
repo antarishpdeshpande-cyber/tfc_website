@@ -1701,6 +1701,7 @@
           .then(data => {
             if (data.images && data.images.length > 0) {
               galleryContainer.innerHTML = ''; // Clear static content
+              const fragment = document.createDocumentFragment();
               data.images.forEach(item => {
                 const tapeDiv = document.createElement('div');
                 tapeDiv.className = 'tape';
@@ -1728,8 +1729,9 @@
                                     ${mediaContent}
                                 </div>
                             `;
-                galleryContainer.appendChild(tapeDiv);
+                fragment.appendChild(tapeDiv);
               });
+              galleryContainer.appendChild(fragment);
             }
           })
           .catch(err => console.log('Gallery load error or empty:', err));
