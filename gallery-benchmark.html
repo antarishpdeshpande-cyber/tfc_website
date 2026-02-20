@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Benchmark</title>
+    <style>
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 12px;
+        }
+        .tape {
+            grid-column: span 6;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gallery Benchmark</h1>
+    <button onclick="runBenchmark('slow')">Run Slow (Current)</button>
+    <button onclick="runBenchmark('fast')">Run Fast (Fragment)</button>
+    <button onclick="runBenchmark('string')">Run String (innerHTML)</button>
+    <div id="results"></div>
+    <div class="gallery" id="galleryContainer"></div>
+
+    <script>
+        const items = Array.from({ length: 5000 }, (_, i) => ({
+            title: `Gallery Item ${i}`,
+            image: 'https://via.placeholder.com/150',
+            instagram_link: '#'
+        }));
+
+        function createTapeDiv(item) {
+            const tapeDiv = document.createElement('div');
+            tapeDiv.className = 'tape';
+            let mediaContent = `<img src="${item.image}" alt="${item.title}" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+            if (item.instagram_link) {
+                mediaContent = `<a href="${item.instagram_link}" target="_blank" rel="noopener noreferrer">${mediaContent}</a>`;
+            }
+            tapeDiv.innerHTML = `
+                <div class="topbar">
+                    <div class="name">${item.title}</div>
+                    <div class="pill">Follow</div>
+                </div>
+                <div class="media">
+                    ${mediaContent}
+                </div>
+            `;
+            return tapeDiv;
+        }
+
+        function createTapeHtml(item) {
+            let mediaContent = `<img src="${item.image}" alt="${item.title}" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">`;
+            if (item.instagram_link) {
+                mediaContent = `<a href="${item.instagram_link}" target="_blank" rel="noopener noreferrer">${mediaContent}</a>`;
+            }
+            return `
+            <div class="tape">
+                <div class="topbar">
+                    <div class="name">${item.title}</div>
+                    <div class="pill">Follow</div>
+                </div>
+                <div class="media">
+                    ${mediaContent}
+                </div>
+            </div>
+            `;
+        }
+
+        function runBenchmark(type) {
+            const galleryContainer = document.getElementById('galleryContainer');
+            galleryContainer.innerHTML = ''; // Clear previous content
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = 'Running...';
+
+            // Force layout/style recalc before starting
+            void galleryContainer.offsetHeight;
+
+            setTimeout(() => {
+                const startTime = performance.now();
+
+                if (type === 'slow') {
+                    items.forEach(item => {
+                        const tapeDiv = createTapeDiv(item);
+                        galleryContainer.appendChild(tapeDiv);
+                    });
+                } else if (type === 'fast') {
+                    const fragment = document.createDocumentFragment();
+                    items.forEach(item => {
+                        const tapeDiv = createTapeDiv(item);
+                        fragment.appendChild(tapeDiv);
+                    });
+                    galleryContainer.appendChild(fragment);
+                } else if (type === 'string') {
+                    let html = '';
+                    items.forEach(item => {
+                        html += createTapeHtml(item);
+                    });
+                    galleryContainer.innerHTML = html;
+                }
+
+                // Force layout calculation to ensure everything is rendered
+                void galleryContainer.offsetHeight;
+
+                const endTime = performance.now();
+                const duration = endTime - startTime;
+                resultsDiv.innerHTML = `${type} method took ${duration.toFixed(2)} ms`;
+                console.log(`${type} method took ${duration.toFixed(2)} ms`);
+            }, 100);
+        }
+    </script>
+</body>
+</html>
