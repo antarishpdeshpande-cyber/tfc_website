@@ -1424,13 +1424,16 @@
     });
 
     // ===== Coach Cards (Tap to Flip) - Event Delegation =====
-    document.body.addEventListener("click", (e) => {
-      const card = e.target.closest(".flip");
-      if (card) {
-        const inner = card.querySelector(".flipInner");
-        if (inner) inner.classList.toggle("flipped");
-      }
-    });
+    const coachGrid = document.querySelector('.coachGrid');
+    if (coachGrid) {
+      coachGrid.addEventListener("click", (e) => {
+        const card = e.target.closest(".flip");
+        if (card) {
+          const inner = card.querySelector(".flipInner");
+          if (inner) inner.classList.toggle("flipped");
+        }
+      });
+    }
 
     // ===== Content Loading =====
     Promise.all([
@@ -1529,13 +1532,7 @@
                     </div>
                  `).join('');
 
-          // Re-attach listeners for new elements
-          document.querySelectorAll(".flip").forEach(card => {
-            card.addEventListener("click", () => {
-              const inner = card.querySelector(".flipInner");
-              inner.classList.toggle("flipped");
-            });
-          });
+          // No need to re-attach listeners; using event delegation on .coachGrid
         }
       }
 
