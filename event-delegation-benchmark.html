@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Delegation Benchmark</title>
+    <style>
+        .coachGrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .flip {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+        }
+        .flipped {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Delegation Benchmark</h1>
+    <div id="controls">
+        <button id="runIndividual">Run Individual Listeners</button>
+        <button id="runDelegation">Run Delegation</button>
+    </div>
+    <div id="results"></div>
+    <div class="coachGrid" id="coachGrid"></div>
+
+    <script>
+        const COUNT = 10000;
+        const grid = document.getElementById('coachGrid');
+        const results = document.getElementById('results');
+
+        function setupGrid() {
+            grid.innerHTML = '';
+            for (let i = 0; i < COUNT; i++) {
+                const div = document.createElement('div');
+                div.className = 'flip';
+                div.innerHTML = '<div class="flipInner">Card ' + i + '</div>';
+                grid.appendChild(div);
+            }
+        }
+
+        document.getElementById('runIndividual').addEventListener('click', () => {
+            setupGrid();
+            const start = performance.now();
+            document.querySelectorAll(".flip").forEach(card => {
+                card.addEventListener("click", () => {
+                    const inner = card.querySelector(".flipInner");
+                    inner.classList.toggle("flipped");
+                });
+            });
+            const end = performance.now();
+            results.textContent = `Individual listeners for ${COUNT} elements took ${(end - start).toFixed(2)}ms`;
+        });
+
+        document.getElementById('runDelegation').addEventListener('click', () => {
+            setupGrid();
+            const start = performance.now();
+            grid.addEventListener("click", (e) => {
+                const card = e.target.closest(".flip");
+                if (card) {
+                    const inner = card.querySelector(".flipInner");
+                    if (inner) inner.classList.toggle("flipped");
+                }
+            });
+            const end = performance.now();
+            results.textContent = `Delegation listener for ${COUNT} elements took ${(end - start).toFixed(2)}ms`;
+        });
+    </script>
+</body>
+</html>
